@@ -14,23 +14,8 @@
 				overflow: hidden;
 				font-family: 'Arial', sans-serif;
 				background-color: #222;
-				position: relative;
 			}
-
-			/* Background Box */
-			.background-box {
-				position: absolute;
-				top: 5%;
-				left: 5%;
-				width: 90%;
-				height: 90%;
-				background-color: rgba(0, 0, 0, 0.7);
-				border-radius: 20px;
-				box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-				z-index: -1; /* Place behind content */
-			}
-
-			/* Foreground Styles (for the welcome screen, form, and success message) */
+			/* Foreground styles */
 			.foreground {
 				position: absolute;
 				top: 0;
@@ -40,34 +25,31 @@
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				flex-direction: column;
+				background-color: rgba(0, 0, 0, 0.7);
 				color: white;
 				text-align: center;
 				z-index: 10;
 				pointer-events: auto;
+				flex-direction: column;
 				opacity: 1;
 				transition: opacity 1s ease-in-out;
 			}
-
 			.foreground.hidden {
 				opacity: 0;
 				pointer-events: none;
 			}
-
 			.foreground h1 {
 				font-size: 4em;
 				margin-bottom: 20px;
 				font-weight: bold;
 				text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
 			}
-
 			.foreground p {
 				font-size: 1.5em;
 				margin-bottom: 40px;
 				font-weight: lighter;
 				text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
 			}
-
 			.foreground button {
 				padding: 15px 30px;
 				font-size: 1.5em;
@@ -79,12 +61,10 @@
 				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 				transition: transform 0.3s ease, background-color 0.3s ease;
 			}
-
 			.foreground button:hover {
 				background-color: #ff3b3b;
 				transform: scale(1.1);
 			}
-
 			/* Form Container */
 			.form-container {
 				display: none;
@@ -102,14 +82,12 @@
 				color: white;
 				font-size: 1.2em;
 			}
-
 			.form-container label {
 				display: block;
 				font-size: 1.1em;
 				margin-bottom: 8px;
 				font-weight: bold;
 			}
-
 			.form-container input,
 			.form-container select {
 				width: 100%;
@@ -122,12 +100,10 @@
 				margin-bottom: 20px;
 				transition: border-color 0.3s ease;
 			}
-
 			.form-container input:focus,
 			.form-container select:focus {
 				border-color: #ff5c5c;
 			}
-
 			.form-container button {
 				padding: 15px 30px;
 				font-size: 1.5em;
@@ -140,12 +116,10 @@
 				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 				transition: transform 0.3s ease, background-color 0.3s ease;
 			}
-
 			.form-container button:hover {
 				background-color: #45a049;
 				transform: scale(1.05);
 			}
-
 			/* Success Message */
 			.success-message {
 				display: none;
@@ -163,21 +137,18 @@
 				border-radius: 10px;
 				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 			}
-
 			.success-message h2 {
 				font-size: 2em;
 				font-weight: bold;
 			}
-
 			.success-message p {
 				font-size: 1.2em;
 				margin: 10px 0;
 				font-weight: lighter;
 			}
-
 			.success-message button {
 				padding: 20px 50px;
-				font-size: 0.9em;
+				font-size: 1.8em;
 				border: none;
 				border-radius: 50px;
 				background-color: #ff5c5c;
@@ -186,7 +157,6 @@
 				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 				transition: transform 0.3s ease, background-color 0.3s ease;
 			}
-
 			.success-message button:hover {
 				background-color: #ff3b3b;
 				transform: scale(1.1);
@@ -194,9 +164,6 @@
 		</style>
 	</head>
 	<body class="block-background">
-		<!-- Background Box -->
-		<div class="background-box"></div>
-
 		<!-- Welcome Screen -->
 		<div class="foreground" id="welcome-screen">
 			<h1>Welcome to TredFit</h1>
@@ -255,11 +222,12 @@
 
 		<!-- Success Message -->
 		<div class="success-message" id="success-message">
-			<h2>You're Almost Ready!</h2>
-			<p>Click the button below to step into VR and be transported to a world beyond imagination.</p>
+			<h2>You're all set! Get ready to experience a run like never before.</h2>
+			<p>Step into VR and be transported to a world beyond imagination. Are you ready?</p>
 			<button onclick="clearScreen()">I'm Ready</button>
 		</div>
 
+		<script type="module" src="./index.js"></script>
 		<script>
 			function showForm() {
 				// Hide the welcome screen

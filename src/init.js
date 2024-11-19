@@ -55,7 +55,7 @@ export async function init(setupScene = () => {}, onFrame = () => {}) {
 		100,
 		window.innerWidth / window.innerHeight,
 		0.1,
-		150,
+		200,
 	);
 	camera.position.set(-27, 1.5, 50);
 
