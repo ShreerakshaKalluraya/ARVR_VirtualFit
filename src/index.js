@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { Text } from 'troika-three-text';
 import { init } from './init.js';
@@ -12,7 +12,7 @@ scoreText.color = 0xffa276;
 scoreText.anchorX = 'center';
 scoreText.anchorY = 'middle';
 
-function setupScene({ scene, camera}) {
+function setupScene({ scene}) {
     const gltfLoader = new GLTFLoader();
     
     // Load room
