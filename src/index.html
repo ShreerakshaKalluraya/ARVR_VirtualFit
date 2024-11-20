@@ -1,277 +1,260 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<title>VirtualFit</title>
-		<meta charset="utf-8" />
-		<meta
-			name="viewport"
-			content="width=device-width, initial-scale=1.0, user-scalable=no"
-		/>
-		<style>
-			body {
-				margin: 0;
-				height: 100vh;
-				overflow: hidden;
-				font-family: 'Arial', sans-serif;
-				background-color: #222;
-			}
-			/* Foreground styles */
-			.foreground {
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: rgba(0, 0, 0, 0.7);
-				color: white;
-				text-align: center;
-				z-index: 10;
-				pointer-events: auto;
-				flex-direction: column;
-				opacity: 1;
-				transition: opacity 1s ease-in-out;
-			}
-			.foreground.hidden {
-				opacity: 0;
-				pointer-events: none;
-			}
-			.foreground h1 {
-				font-size: 4em;
-				margin-bottom: 20px;
-				font-weight: bold;
-				text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
-			}
-			.foreground p {
-				font-size: 1.5em;
-				margin-bottom: 40px;
-				font-weight: lighter;
-				text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
-			}
-			.foreground button {
-				padding: 15px 30px;
-				font-size: 1.5em;
-				border: none;
-				border-radius: 50px;
-				background-color: #ff5c5c;
-				color: white;
-				cursor: pointer;
-				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-				transition: transform 0.3s ease, background-color 0.3s ease;
-			}
-			.foreground button:hover {
-				background-color: #ff3b3b;
-				transform: scale(1.1);
-			}
-			/* Form Container */
-			.form-container {
-				display: none;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				background-color: rgba(0, 0, 0, 0.9);
-				padding: 50px;
-				border-radius: 15px;
-				box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
-				width: 80%;
-				max-width: 500px;
-				text-align: left;
-				color: white;
-				font-size: 1.2em;
-			}
-			.form-container label {
-				display: block;
-				font-size: 1.1em;
-				margin-bottom: 8px;
-				font-weight: bold;
-			}
-			.form-container input,
-			.form-container select {
-				width: 100%;
-				padding: 12px;
-				font-size: 1.2em;
-				border-radius: 10px;
-				border: 2px solid #555;
-				background-color: #333;
-				color: white;
-				margin-bottom: 20px;
-				transition: border-color 0.3s ease;
-			}
-			.form-container input:focus,
-			.form-container select:focus {
-				border-color: #ff5c5c;
-			}
-			.form-container button {
-				padding: 15px 30px;
-				font-size: 1.5em;
-				border: none;
-				border-radius: 50px;
-				background-color: #4caf50;
-				color: white;
-				cursor: pointer;
-				width: 100%;
-				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-				transition: transform 0.3s ease, background-color 0.3s ease;
-			}
-			.form-container button:hover {
-				background-color: #45a049;
-				transform: scale(1.05);
-			}
-			/* Success Message */
-			.success-message {
-				display: none;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				transform: translate(-50%, -50%);
-				color: white;
-				font-size: 1.8em;
-				text-align: center;
-				width: 80%;
-				max-width: 600px;
-				padding: 20px;
-				background-color: rgba(0, 0, 0, 0.8);
-				border-radius: 10px;
-				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-			}
-			.success-message h2 {
-				font-size: 2em;
-				font-weight: bold;
-			}
-			.success-message p {
-				font-size: 1.2em;
-				margin: 10px 0;
-				font-weight: lighter;
-			}
-			.success-message button {
-				padding: 20px 50px;
-				font-size: 1em;
-				border: none;
-				border-radius: 50px;
-				background-color: #ff5c5c;
-				color: white;
-				cursor: pointer;
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-				transition: transform 0.3s ease, background-color 0.3s ease;
-			}
-			.success-message button:hover {
-				background-color: #ff3b3b;
-				transform: scale(1.1);
-			}
-		</style>
-	</head>
-	<body class="block-background">
-		<!-- Welcome Screen -->
-		<div class="foreground" id="welcome-screen">
-			<h1>Welcome to TredFit</h1>
-			<p>Are you ready to embark on an exhilarating VR journey?</p>
-			<button onclick="showForm()">Continue</button>
-		</div>
+<head>
+    <!-- Title of the page -->
+    <title>VirtualFit</title>
 
-		<!-- Form Container -->
-		<div class="form-container" id="form-container">
-			<h2>Let's Get Started</h2>
-			<form id="user-form">
-				<label for="name">Enter your Name/Nickname:</label>
-				<input type="text" id="name" name="name" placeholder="Enter your name" required />
+    <!-- Set character encoding -->
+    <meta charset="utf-8" />
 
-				<label for="weight">Select your Weight:</label>
-				<select id="weight" name="weight" required>
-					<option value="" disabled selected>Select your range</option>
-					<option value="40-50">40-50 kg</option>
-					<option value="50-60">50-60 kg</option>
-					<option value="60-70">60-70 kg</option>
-					<option value="70-80">70-80 kg</option>
-					<option value="80+">80+ kg</option>
-				</select>
+    <!-- Ensure proper rendering on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 
-				<label for="height">Enter your Height:</label>
-				<div style="display: flex; justify-content: space-between; gap: 10px;">
-					<input
-						type="number"
-						id="height"
-						name="height"
-						placeholder="Height"
-						required
-						style="width: 60%; padding: 10px; font-size: 1.2em; border-radius: 10px; background-color: #333; color: white;"
-					/>
-					<select
-						id="height-unit"
-						name="height-unit"
-						required
-						style="width: 35%; padding: 10px; font-size: 1.2em; border-radius: 10px; background-color: #333; color: white;">
-						<option value="cm" selected>cm</option>
-						<option value="ft">ft</option>
-					</select>
-				</div>
+	<style>
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background-color: #222;
+        }
 
-				<label for="milestone">Set Your Milestone:</label>
-				<select id="milestone" name="milestone" required>
-					<option value="" disabled selected>Select your milestone</option>
-					<option value="20">20 minutes</option>
-					<option value="30">30 minutes</option>
-					<option value="40">40 minutes</option>
-				</select>
+        /* Foreground styles */
+        .foreground {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            z-index: 10;
+            pointer-events: auto;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
 
-				<button type="submit">Submit</button>
-			</form>
-		</div>
+        .foreground.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
 
-		<!-- Success Message -->
-		<div class="success-message" id="success-message">
-			<h2>You're all set! Get ready to experience a run like never before.</h2>
-			<p>Step into VR and be transported to a world beyond imagination. Are you ready?</p>
-			<button onclick="clearScreen()">I'm Ready</button>
-		</div>
+        .foreground h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.6);
+        }
 
-		<script type="module" src="./index.js"></script>
-		<script>
-			function showForm() {
-				// Hide the welcome screen
-				document.getElementById('welcome-screen').classList.add('hidden');
+        .foreground p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            font-weight: lighter;
+            text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.6);
+        }
 
-				// Show the form container
-				document.getElementById('form-container').style.display = 'block';
-			}
+        .foreground button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            background-color: #ff5c5c;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
 
-			document.getElementById('user-form').addEventListener('submit', function (e) {
-				e.preventDefault();
+        .foreground button:hover {
+            background-color: #ff3b3b;
+            transform: scale(1.1);
+        }
 
-				// Collect form data
-				const name = document.getElementById('name').value;
-				const weight = document.getElementById('weight').value;
-				const height = document.getElementById('height').value;
-				const heightUnit = document.getElementById('height-unit').value;
-				const milestone = document.getElementById('milestone').value;
+        /* Form Container */
+        .form-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.7);
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            color: white;
+            font-size: 1.2em;
+        }
 
-				// Store the collected data (for future use)
-				const userData = {
-					name,
-					weight,
-					height: `${height} ${heightUnit}`,
-					milestone
-				};
+        .form-container label {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
 
-				// Log the collected data (for debugging)
-				console.log(userData);
+        .form-container input,
+        .form-container select {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: 2px solid #555;
+            background-color: #333;
+            color: white;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
 
-				// Hide the form
-				document.getElementById('form-container').style.display = 'none';
+        .form-container input:focus,
+        .form-container select:focus {
+            border-color: #ff5c5c;
+        }
 
-				// Show success message
-				document.getElementById('success-message').style.display = 'block';
-			});
+        .form-container button {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 50px;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
 
-			function clearScreen() {
-				// Hide success message and prepare for VR entrance
-				document.getElementById('success-message').style.display = 'none';
+        .form-container button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
 
-				// You can implement VR loading logic here
-				//alert("Now entering VR...");
-			}
-		</script>
-	</body>
+        /* Success Message */
+        .success-message {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.8em;
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .success-message h2 {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .success-message p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            font-weight: lighter;
+        }
+
+        .success-message button {
+            padding: 20px 50px;
+            font-size: 1em;
+            border: none;
+            border-radius: 50px;
+            background-color: #ff5c5c;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .success-message button:hover {
+            background-color: #ff3b3b;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="block-background">
+    <!-- Welcome Screen -->
+    <div class="foreground" id="welcome-screen">
+        <h1>Welcome to TredFit</h1>
+        <p>Are you ready to embark on an exhilarating VR journey?</p>
+        <button onclick="showForm()">Continue</button>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container" id="form-container">
+        <h2>Let's Get Started</h2>
+        <!-- Form for user details -->
+        <form id="user-form">
+            <!-- Input for name -->
+            <label for="name">Enter your Name/Nickname:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required />
+
+            <!-- Dropdown for weight range -->
+            <label for="weight">Select your Weight:</label>
+            <select id="weight" name="weight" required>
+                <option value="" disabled selected>Select your range</option>
+                <!-- Weight options -->
+                <option value="40-50">40-50 kg</option>
+                <option value="50-60">50-60 kg</option>
+                <option value="60-70">60-70 kg</option>
+                <option value="70-80">70-80 kg</option>
+                <option value="80+">80+ kg</option>
+            </select>
+
+            <!-- Input and dropdown for height -->
+            <label for="height">Enter your Height:</label>
+            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                <input type="number" id="height" name="height" placeholder="Height" required />
+                <select id="height-unit" name="height-unit" required>
+                    <option value="cm" selected>cm</option>
+                    <option value="ft">ft</option>
+                </select>
+            </div>
+
+            <!-- Milestone selection -->
+            <label for="milestone">Set Your Milestone:</label>
+            <select id="milestone" name="milestone" required>
+                <option value="" disabled selected>Select your milestone</option>
+                <option value="20">20 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="40">40 minutes</option>
+            </select>
+
+            <!-- Submit button -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="success-message">
+        <h2>You're all set! Get ready to experience a run like never before.</h2>
+        <p>Step into VR and be transported to a world beyond imagination. Are you ready?</p>
+        <button onclick="clearScreen()">I'm Ready</button>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+    <script>
+        // Logic to show form and handle interactions
+        function showForm() {
+            document.getElementById('welcome-screen').classList.add('hidden');
+            document.getElementById('form-container').style.display = 'block';
+        }
+
+        function clearScreen() {
+            document.body.innerHTML = '';
+            // Additional cleanup code can go here
+        }
+    </script>
+</body>
 </html>
